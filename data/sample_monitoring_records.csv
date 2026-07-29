@@ -1,0 +1,4 @@
+user_id,monitoring_date,current_status,change_from_previous,issues,reviewer_id
+A001,2026-06-20,もの忘れの訴えが継続している,服薬管理と記憶面に変化がみられる,服薬状況の確認が必要,RV01
+B001,2026-06-15,見守りを強化して経過を見ている,特になし,,RV02
+D001,2026-06-15,安定した状態を維持,変化なし,,RV01

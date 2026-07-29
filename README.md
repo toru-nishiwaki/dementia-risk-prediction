@@ -3,6 +3,125 @@
 訪問介護職としての現場経験を起点に、データ分析・機械学習を用いて
 「認知症リスクの早期検知」と「介入優先度の判定」を検討したポートフォリオです。
 
+## Streamlitデモ：認知症リスクと支援優先度の可視化デモ
+
+本分析をもとに、採用担当者がブラウザ上で短時間に内容を理解し、実際に操作できる
+軽量Streamlitデモを実装しています。
+
+**公開デモURL：`(準備中／Streamlit Cloudへのデプロイ後にここへ記載します)`**
+
+> **本デモは医療診断アプリではありません。** 介護・医療関連データの特徴から算出される
+> 「モデル上のリスクスコア」を可視化し、専門職が観察・支援対象の優先度を検討するための
+> 意思決定支援デモです。最終判断は専門職が行います。
+
+### アプリの目的
+
+既存の認知症リスク予測分析（下記「概要」以降を参照）を、専門知識がなくても
+3分程度で全体像を把握できる形にしたデモです。リスクスコアそのものよりも、
+「見逃し防止のためにRecallを重視した閾値設計」「確率キャリブレーション」
+「特徴量重要度と個別予測の違い」といった、意思決定支援モデルを設計するうえでの
+考え方を体験できることを重視しています。
+
+### 3分で確認できる見どころ
+
+1. **使い方・概要** — ROC-AUC・Recall・採用閾値をカード形式で確認
+2. **リスクスコア体験** — 3つのデモケース（安定した例／経過観察が必要な例／優先確認が必要な例）を選び、「リスクを算出」ボタンでモデル上のリスクスコアとLow/Medium/High区分を表示
+3. **結果の読み解き** — モデル全体の特徴量重要度（横棒グラフ）と、今回入力した値の比較表
+4. **しきい値とモデル評価** — 採用閾値0.40の妥当性、ROC-AUC/Recall/Precision/F1、混同行列、確率キャリブレーション
+5. **状態変化シミュレーション・限界** — ADL・FunctionalAssessmentを仮に変更した場合のスコア変化と、本デモの限界
+
+### 操作方法
+
+1. サイドバーで5つの画面を切り替えます。
+2. 「リスクスコア体験」画面でデモケースを選ぶか、MMSE・ADL・FunctionalAssessment・
+   PhysicalActivity・MemoryComplaints・BehavioralProblemsの主要項目を操作します
+   （その他の項目はデモ用基準値に固定されます）。
+3. 「リスクを算出」ボタンを押したときのみ予測が実行されます。
+4. 「状態変化シミュレーション・限界」画面では、算出済みの入力条件をもとに
+   ADL・FunctionalAssessmentを仮に変更した場合のスコア変化を確認できます
+   （実際の介入効果や因果関係を示すものではありません）。
+
+### 画面構成
+
+| # | 画面 | 主な内容 |
+|---|---|---|
+| 1 | 使い方・概要 | 現場課題・デモの目的・評価指標カード・注意事項 |
+| 2 | リスクスコア体験 | デモケース選択、主要項目の入力、リスク算出 |
+| 3 | 結果の読み解き | 特徴量重要度（モデル全体）、今回の入力値との比較表 |
+| 4 | しきい値とモデル評価 | ROC-AUC/Recall/Precision/F1、混同行列、閾値比較、キャリブレーション |
+| 5 | 状態変化シミュレーション・限界 | ADL/FunctionalAssessment変更シミュレーション、本デモの限界 |
+
+### 医療診断ではない旨
+
+本デモは医療診断を目的としたものではありません。表示される「モデル上のリスクスコア」は
+統計モデルが算出する参考指標であり、実際の将来の発症確率を断定するものではありません。
+最終的な判断は医師・看護師・ケアマネジャーなど専門職が行います。
+
+### 技術構成
+
+- Python 3.9
+- Streamlit 1.50
+- pandas / numpy
+- scikit-learn（RandomForestClassifier, CalibratedClassifierCV）
+- matplotlib
+- joblib
+
+モデルは事前に `scripts/export_streamlit_assets.py` で学習・書き出しを行い、
+アプリ起動時は保存済みモデル（`models/calibrated_model.joblib`）を読み込むのみで、
+起動のたびに再学習は行いません。
+
+### モデルの限界
+
+- 公開データ（Kaggle）を使用した検証モデルであり、実在施設での外部検証は未実施
+- 因果関係を示すモデルではなく、状態変化シミュレーションも実際の介入効果を示すものではない
+- 医療診断には使用できない
+- 実運用には専門職監修と追加検証が必要
+- 入力データの品質によって出力が変わる
+
+### ローカル起動方法
+
+```bash
+git clone <このリポジトリ>
+cd dementia-risk-prediction
+pip install -r requirements.txt
+
+# モデル・評価指標などのアセットを書き出す（初回のみ／data/alzheimers_disease_data.csv が必要）
+python3 scripts/export_streamlit_assets.py
+
+# Streamlitアプリを起動
+streamlit run app.py
+```
+
+### ファイル構成（Streamlitデモ関連）
+
+```
+dementia-risk-prediction/
+├── app.py                          # Streamlitアプリ本体
+├── requirements.txt
+├── .streamlit/
+│   └── config.toml                 # テーマ設定（ティール系アクセント）
+├── data/
+│   ├── alzheimers_disease_data.csv # 学習用データ（Kaggle公開データ）
+│   └── demo_cases.csv              # デモケース（3パターン）
+├── models/
+│   ├── calibrated_model.joblib     # キャリブレーション済みモデル
+│   ├── feature_columns.json        # 学習時の特徴量名・順序
+│   ├── feature_defaults.json       # デモ用基準値
+│   └── model_metadata.json         # 評価指標・閾値などのメタデータ
+├── outputs/
+│   ├── feature_importance.csv
+│   ├── threshold_metrics.csv
+│   └── confusion_matrix.csv
+└── scripts/
+    └── export_streamlit_assets.py  # モデル学習・アセット書き出しスクリプト
+```
+
+### スクリーンショット
+
+（`docs/screenshots/` にキャプチャを追加し、ここに掲載します）
+
+---
+
 ## 概要
 
 Kaggleの認知症関連データセットを用い、RandomForestClassifierによる

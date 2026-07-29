@@ -1,0 +1,5 @@
+user_id,age,care_level,medical_history,language_support,notes
+A001,82,要介護2,高血圧,日本語,一人暮らし
+B001,78,要介護1,糖尿病,日本語,
+C001,85,要介護3,不明,日本語,記録が少ない利用者
+D001,80,要介護1,なし,日本語,自立度が高い
