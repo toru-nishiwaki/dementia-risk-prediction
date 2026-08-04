@@ -1,5 +1,6 @@
 {
   "user_id": ["利用者ID", "利用者番号", "顧客ID", "利用者コード", "ID"],
+  "user_name": ["利用者名", "氏名", "name", "client_name"],
   "age": ["年齢"],
   "care_level": ["要介護度", "介護度"],
   "medical_history": ["既往歴", "既往症"],
