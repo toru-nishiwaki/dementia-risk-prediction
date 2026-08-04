@@ -1,0 +1,83 @@
+{
+  "model_description": {
+    "ja": "RandomForestClassifierをCalibratedClassifierCV（sigmoid, cv=3）で確率校正したモデル",
+    "base_estimator": "RandomForestClassifier(random_state=42)",
+    "calibration_method": "sigmoid",
+    "calibration_cv": 3
+  },
+  "dataset": {
+    "source": "Kaggle: Alzheimer's Disease Dataset (alzheimers_disease_data.csv)",
+    "n_samples": 2149,
+    "n_features_raw": 32,
+    "n_features_encoded": 36,
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "cross_validation_5fold": {
+    "accuracy": 0.9325327140823108,
+    "recall": 0.8534073973716299,
+    "precision": 0.950303328414494,
+    "f1": 0.8991079745828099,
+    "roc_auc": 0.9520909045808299
+  },
+  "test_set_metrics": {
+    "roc_auc": 0.9528562327458059,
+    "at_selected_threshold": {
+      "threshold": 0.4,
+      "accuracy": 0.9511627906976744,
+      "precision_1": 0.952054794520548,
+      "recall_1": 0.9084967320261438,
+      "f1_1": 0.9297658862876255
+    }
+  },
+  "calibration": {
+    "brier_score_before": 0.07866093023255813,
+    "brier_score_after": 0.05424631891329689
+  },
+  "thresholds": {
+    "selected_threshold": 0.4,
+    "selection_rule": "Recall >= 0.85 の候補の中でF1-scoreが最大となる閾値",
+    "high_risk_threshold": 0.7,
+    "high_risk_threshold_rule": "優先対応ラインとして運用上設定した固定値"
+  },
+  "main_input_features": [
+    "MMSE",
+    "ADL",
+    "FunctionalAssessment",
+    "PhysicalActivity",
+    "MemoryComplaints",
+    "BehavioralProblems"
+  ],
+  "feature_ranges": {
+    "MMSE": [
+      0,
+      30
+    ],
+    "ADL": [
+      0,
+      10
+    ],
+    "FunctionalAssessment": [
+      0,
+      10
+    ],
+    "PhysicalActivity": [
+      0,
+      10
+    ],
+    "MemoryComplaints": [
+      0,
+      1
+    ],
+    "BehavioralProblems": [
+      0,
+      1
+    ]
+  },
+  "main_input_note": "このデモでは主要項目を操作し、その他の項目はデモ用基準値に固定しています。",
+  "disclaimer": {
+    "not_diagnostic": "医療診断を目的としたものではありません。",
+    "final_decision": "最終判断は専門職が行います。",
+    "data_note": "架空または公開データを使用しています。"
+  }
+}

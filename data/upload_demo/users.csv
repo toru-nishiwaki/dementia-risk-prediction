@@ -1,0 +1,4 @@
+user_id,user_name,age,care_level,medical_history,language_support,notes
+U101,伊藤 健一,84,要介護2,高血圧,日本語,移動時の見守りを実施中
+U102,渡辺 美咲,79,要介護1,不明,日本語,自宅で一人暮らし
+U103,山本 隆,88,要介護2,不明,日本語,記録が少ない利用者

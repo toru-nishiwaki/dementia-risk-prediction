@@ -1,0 +1,4 @@
+case_id,case_name,MMSE,ADL,FunctionalAssessment,PhysicalActivity,MemoryComplaints,BehavioralProblems,reference_risk_score,reference_risk_level
+case_1,状態が比較的安定した例,28,8.5,8.5,6.0,0,0,0.0079,Low
+case_2,経過観察が必要な例,18,6.0,5.0,4.0,1,0,0.6,Medium
+case_3,優先確認が必要な例,8,2.0,1.5,2.0,1,1,0.997,High

@@ -1,0 +1,5 @@
+user_id,user_name,age,care_level,medical_history,language_support,notes
+A001,田中 一郎,82,要介護2,高血圧,日本語,一人暮らし
+B001,佐藤 花子,78,要介護1,糖尿病,日本語,
+C001,鈴木 次郎,85,要介護3,不明,日本語,記録が少ない利用者
+D001,高橋 和子,80,要介護1,なし,日本語,自立度が高い
