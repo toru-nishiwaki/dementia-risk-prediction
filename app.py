@@ -2292,7 +2292,7 @@ def _render_bottom_expanders():
             8. 次回確認・共有候補と結果CSVを出力する
             """
         )
-    st.markdown("## スコープと将来像")
+    st.markdown("## このPoCの対象範囲と将来像")
 
     with st.expander("このPoCで判断しないこと"):
         st.markdown(
