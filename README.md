@@ -1,6 +1,9 @@
 # 計画書と介護記録の差分から確認優先度を整理するPoC
 
 Care Plan & Record Review Support PoC
+### ▶ [Streamlitデモを開く](https://care-plan-record-review.streamlit.app)
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://care-plan-record-review.streamlit.app)
 
 訪問介護計画書、日々の介護記録、モニタリング記録を利用者単位で統合し、計画内容と実際の記録との差や状態変化候補を整理するPoCです。抽出結果を職員が確認した後、運用上の確認区分と、次回確認・対応・共有候補を表示します。
 
